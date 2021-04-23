@@ -22,7 +22,7 @@ function onSearchFormSubmit(e){
     e.preventDefault();
 
     newApiService.query =  e.currentTarget.elements.query.value;
-    if(newApiService.query ===''){
+    if(newApiService.query === ''){
         return
     }
     loadMoreBtn.show();
@@ -35,6 +35,11 @@ function onSearchFormSubmit(e){
     loadMoreBtn.disable();
     newApiService.fetchPhoto()
     .then(photos =>{
+      if(photos.length ===0 ){
+        console.error('Нет таких картинок!, ввидите что то нормальное!')
+        loadMoreBtn.hide(); 
+        return
+      }
       const photosListMarkup = photosMap (photos);
       refs.photosContainer.insertAdjacentHTML('beforeend', photosListMarkup);
       scrollPage();
