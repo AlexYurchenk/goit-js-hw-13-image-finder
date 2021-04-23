@@ -14,17 +14,15 @@ const refs = {
   const documentHeight = document.documentElement.clientHeight;
 
 ///EventListeners
+
 refs.searchForm.addEventListener('submit', onSearchFormSubmit)
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore)
 
 //Function
 function onSearchFormSubmit(e){
     e.preventDefault();
-
     newApiService.query =  e.currentTarget.elements.query.value;
-    if(newApiService.query === ''){
-        return
-    }
+    
     loadMoreBtn.show();
     newApiService.resetPage();
     clearPhotosContainer();
@@ -32,12 +30,20 @@ function onSearchFormSubmit(e){
 }
 
  function  onLoadMore(){
+
     loadMoreBtn.disable();
+    if(newApiService.fetchPhoto() === undefined){
+      console.error('Нет таких картинок!, ввидите что то нормальное!')
+      loadMoreBtn.hide();
+      refs.searchForm.query.value = '';
+      return
+    }
     newApiService.fetchPhoto()
     .then(photos =>{
       if(photos.length ===0 ){
         console.error('Нет таких картинок!, ввидите что то нормальное!')
         loadMoreBtn.hide(); 
+        refs.searchForm.query.value = '';
         return
       }
       const photosListMarkup = photosMap (photos);
@@ -49,9 +55,6 @@ function onSearchFormSubmit(e){
 }
 
 
-
-
-  
 function clearPhotosContainer() {
     refs.photosContainer.innerHTML = '';
   }

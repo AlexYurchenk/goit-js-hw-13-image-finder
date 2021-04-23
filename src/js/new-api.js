@@ -7,11 +7,16 @@ export default class NewApiService{
     }
             
     fetchPhoto (){
+        if(this.searchQuery.trim() === ''){
+            return ;
+        }
+
         const url = `${BASE__URL}?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API__KEY}`;
-         
          return fetch(url)
-            .then(r =>r.json())
+            .then(r =>{
+                return r.json()})
             .then(({hits}) => {
+
                 this.incrementPage();
                 return hits
             });
