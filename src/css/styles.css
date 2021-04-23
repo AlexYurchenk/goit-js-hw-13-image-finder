@@ -40,21 +40,17 @@ img {
 
 /* Article List */
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  max-width: calc(100vw - 80px);
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-top: -10px;
 }
 
-.gallery li {
+.gallery div {
+  flex-basis: calc(100% / 6 - 10px);
+  margin-left: 10px;
+  margin-top: 10px;
   height: 450px;
-  overflow: hidden;
 }
 
 .gallery img {
